@@ -44,5 +44,5 @@ $t_cases.times do
 	b = $stdin.gets.chomp.to_i
 
 	# Find all possible values of the last stone
-	puts possibles_last_stone_values(steps, a, b).join(" ")
+	puts possibles_last_stone_values(steps, a, b).sort.join(" ")
 end
