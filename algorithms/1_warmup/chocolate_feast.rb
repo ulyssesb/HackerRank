@@ -3,28 +3,43 @@
 ###
 # SOLUTION
 ###
-# The number of pieces is the result of the number of horizontal cuts X vertical
-# cuts. To maximize this output, given a K number of maximum cuts, the optimal 
-# pieces will be k/2 horizontal cuts + k/2 vertical cuts
-
-###
-# HELPERS & CONSTANTS
-###
-def max_cuts(k)
-	# H = K / 2
-	# V = K - H
-	# MAX = H * V	
-	return k/2 * (k - k/2)
-end
+# The total of chocolates that Little Bob can have is:
+# => A. How much he can buy with money in his pocket	
+# 			total 			 = $N / $C
+# => B. While there's new wrappers we should change for chocolate, considering
+# the unused wrappers of the last change
 
 ###
 # MAIN
 ###
+t = gets.to_i
 
-# Read the numbers test cases
-$t_cases = $stdin.gets.chomp
+t.times do
+	(n, c, m) = gets.split.map{|i| i.to_i}
 
-# For each given K cuts, calculate the maximum number of pieces
-$stdin.readlines.collect.map do |k|
-	puts max_cuts(k.to_i)
+	total 	 = n / c
+	wrappers = total
+	unused   = 0 
+
+  # puts "n=#{n} c=#{c} m=#{m}"
+	# puts "total = #{total}"
+
+	# while there's wrappers, we should chnage for more chocolate!
+	while wrappers >= m 
+		changed_wrappers =  wrappers / m 
+		
+    # puts ""
+    # puts "wrappers         = #{wrappers}"
+    # puts "unused           = #{unused}"
+    # puts "changed_wrappers = #{changed_wrappers}"
+		
+		total    += changed_wrappers
+    unused   = wrappers % m 
+		wrappers = changed_wrappers + unused
+
+		# puts "new wrappers     = #{wrappers}"
+		# puts "new unused       = #{unused}"
+	end
+
+	puts total
 end
