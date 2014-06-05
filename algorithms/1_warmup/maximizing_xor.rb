@@ -43,58 +43,19 @@
 #   bin(A) = 1 0 1 0 ; dec(A) = 10
 #   bin(B) = 1 1 0 1 ; dec(B) = 13
 # And bin(A xor B) = bin(0111) = dec(7)
-
+# 
+# 
+# IMPROVEMENT 
+# After some tests it becomes clear that after finding the first leftmost 
+# different bit all right bits can be changed. So, the best solution is to find
+# the Leftmost different bit's position and all fill all right bits with 1.
+# maxXor = 2**((L^R).bit_length) - 1 
 
 ###
 # HELPERS & CONSTANTS
 ###
 def maxXor(l, r)
-  # Initialize A and B 
-  a = l
-  b = r
-
-  # Left different bits
-  left_different_bits = false
-
-  # R bit size (biggest number)
-  max_bits = r.to_s(2).size
-
-  # puts "a = #{'0'*(b.to_s(2).size - a.to_s(2).size) + a.to_s(2)} = #{a}"
-  # puts "b = #{b.to_s(2)} = #{b}"
-
-  # Compare each bit
-  (max_bits -1).downto(0) do |i|
-    # puts ""
-    # puts "i=#{i}       #{a[i]} _ #{b[i]}"
-
-    if a[i] != b[i] then 
-      left_different_bits = true
-
-    elsif a[i] == 0 and left_different_bits == true then
-      # There's no simple way on 1.9, at least, to set a bit[n] on Fixnum
-      # to 0 or 1. The workaround here is to make do A OR '10*' setting 1 at the 
-      # nth position and filling the other bits with 0
-      # a[2] = 1, would be A OR '100'
-      a = a | ('1'+'0'*i).to_i(2) 
-      # puts "set a[#{i}] = 0"
-      # puts "a |  #{('1'+'0'*i)} = #{'0'*(b.to_s(2).size - a.to_s(2).size) + a.to_s(2)} = #{a}"
-          
-    elsif a[i] == 1 and left_different_bits == true then
-      # Same thing as above, but we have to do B XOR '10*'
-      b = b ^ ('1'+'0'*i).to_i(2)
-      # puts "set b[#{i}]  = 1"
-      # puts "b ^ #{('0'+'1'*i)} = #{b.to_s(2)}"
-    end
-  end
-
-  # puts ""
-  # puts "--------"
-  # puts "a = #{'0'*(b.to_s(2).size - a.to_s(2).size) + a.to_s(2)} = #{a}"
-  # puts "b = #{b.to_s(2)} = #{b}"
-  # puts "a xor b = #{(a^b).to_s(2)}"
-
-  # return A xor B
-  return a^b
+  return 2**((l^r).to_s(2).size) - 1
 end
 
 ###
